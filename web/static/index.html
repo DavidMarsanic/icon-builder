@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Icon Builder</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Icon Builder</h1>
+    <p>Pick a background icon, type up to 3 letters, see it live.</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <label class="field">
+        <span>App name</span>
+        <input id="name" type="text" placeholder="e.g. video-clipper" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        <span>Letters</span>
+        <input id="letters" type="text" maxlength="3" placeholder="auto" autocomplete="off" />
+      </label>
+
+      <div class="field">
+        <span>Gradient</span>
+        <div id="swatches" class="swatches"></div>
+      </div>
+
+      <div class="field">
+        <span>Icon</span>
+        <input id="icon-search" type="text" placeholder="Search icons…" autocomplete="off" />
+        <div id="icon-grid" class="icon-grid"></div>
+      </div>
+    </section>
+
+    <section class="preview">
+      <div id="preview-box" class="preview-box"></div>
+      <button id="copy-btn" type="button">Copy SVG</button>
+      <span id="copy-status" class="copy-status" aria-live="polite"></span>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

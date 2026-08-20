@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "id": "github.com/DavidMarsanic/icon-composer",
+      "name": "icon-composer (icon composition engine)",
+      "homepage": "https://github.com/DavidMarsanic/icon-composer",
+      "note": "Compiled directly into this binary — the actual icon-picking/letter-overlay logic lives there so other applets (and eventually the Securexe backend) can reuse it too. Not a separate install."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "chromium-browser",
+      "name": "Chrome or Chromium-based browser",
+      "homepage": "https://www.google.com/chrome/",
+      "note": "Any Chromium-based browser works: Google Chrome, Chromium, Brave, Microsoft Edge, or Arc. Used to render the app's own UI window, same as the rest of this family of apps.",
+      "install": {
+        "macos": "brew install --cask google-chrome"
+      }
+    }
+  ]
+}
