@@ -26,15 +26,6 @@ package this app imports rather than reimplements. This app is just the
 interactive frontend on top of it: a local HTTP server plus an embedded
 static UI, the same shape as every other applet in this family.
 
-## Local development
-
-This repo's `go.mod` currently points at `icon-composer` via a local
-`replace` directive (`../icon-composer`), assuming both repos are checked
-out as siblings. **Before this can be pushed and built remotely by
-Securexe, that replace needs to go** — either drop it once icon-composer
-has a real tagged release on GitHub, or vendor it. A relative-path replace
-only works when both repos are on the same machine.
-
 ## Notes
 
 - No .icns has been added to `packaging/macos/icon-builder.app` yet — same
