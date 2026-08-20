@@ -4,8 +4,9 @@
     {
       "id": "github.com/DavidMarsanic/icon-composer",
       "name": "icon-composer (icon composition engine)",
+      "version": "v0.0.0-20260820133624-9f56f57e3f05",
       "homepage": "https://github.com/DavidMarsanic/icon-composer",
-      "note": "Compiled directly into this binary — the actual icon-picking/letter-overlay logic lives there so other applets (and eventually the Securexe backend) can reuse it too. Not a separate install."
+      "note": "Compiled directly into this binary — the actual icon-picking/letter-overlay logic lives there so other applets (and eventually the Securexe backend) can reuse it too. Not a separate install. Version is the go.mod pseudo-version — bump it deliberately (go get -u), don't let it drift silently."
     }
   ],
   "requirements": [
