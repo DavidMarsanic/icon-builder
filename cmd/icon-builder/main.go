@@ -12,7 +12,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/DavidMarsanic/icon-builder/internal/browser"
+	"github.com/DavidMarsanic/brightencode-appkit/browser"
 	"github.com/DavidMarsanic/icon-builder/internal/server"
 )
 
@@ -44,7 +44,7 @@ func run(args []string) int {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	srv := server.New()
+	srv := server.New(ctx)
 	addr, err := srv.Start(*port)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "error:", err)
@@ -53,14 +53,13 @@ func run(args []string) int {
 
 	fmt.Fprintln(os.Stderr, "Icon Builder running at", addr, "— press Ctrl+C to quit")
 
-	// A host process (securexe-launcher) sets this before starting us and
-	// watches this exact stderr line to discover the URL, so it can host
-	// our UI in its own native window instead of a spawned Chrome one.
-	if os.Getenv("SECUREXE_HOSTED") == "" {
-		if err := browser.OpenAppWindow(addr + "/"); err != nil {
-			fmt.Fprintln(os.Stderr, "couldn't open a window automatically:", err)
-			fmt.Fprintln(os.Stderr, "open this URL manually:", addr+"/")
-		}
+	// A host process (securexe-launcher) sets SECUREXE_HOSTED before
+	// starting us and watches this exact stderr line to discover the URL,
+	// so it can host our UI in its own native window instead of a spawned
+	// Chrome one. OpenIfNotHosted no-ops in that case.
+	if err := browser.OpenIfNotHosted("icon-builder", addr+"/"); err != nil {
+		fmt.Fprintln(os.Stderr, "couldn't open a window automatically:", err)
+		fmt.Fprintln(os.Stderr, "open this URL manually:", addr+"/")
 	}
 
 	<-ctx.Done()

@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 
+	appkit "github.com/DavidMarsanic/brightencode-appkit/server"
 	"github.com/DavidMarsanic/icon-composer/compose"
 )
 
 func (s *Server) handleIcons(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, map[string]any{"icons": compose.IconNames()})
+	appkit.WriteJSON(w, http.StatusOK, map[string]any{"icons": compose.IconNames()})
 }
 
 func (s *Server) handleIconGlyph(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +24,7 @@ func (s *Server) handleIconGlyph(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleSuggest(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
-	writeJSON(w, http.StatusOK, map[string]any{"letters": compose.Initials(name, 3)})
+	appkit.WriteJSON(w, http.StatusOK, map[string]any{"letters": compose.Initials(name, 3)})
 }
 
 type composeRequest struct {
@@ -37,7 +38,7 @@ type composeRequest struct {
 func (s *Server) handleCompose(w http.ResponseWriter, r *http.Request) {
 	var req composeRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		writeJSON(w, http.StatusBadRequest, map[string]any{"error": "invalid request body"})
+		appkit.WriteJSON(w, http.StatusBadRequest, map[string]any{"error": "invalid request body"})
 		return
 	}
 
@@ -49,15 +50,9 @@ func (s *Server) handleCompose(w http.ResponseWriter, r *http.Request) {
 		Seed:    req.Name,
 	})
 	if err != nil {
-		writeJSON(w, http.StatusBadRequest, map[string]any{"error": err.Error()})
+		appkit.WriteJSON(w, http.StatusBadRequest, map[string]any{"error": err.Error()})
 		return
 	}
 
-	writeJSON(w, http.StatusOK, map[string]any{"svg": svg})
-}
-
-func writeJSON(w http.ResponseWriter, status int, body any) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	_ = json.NewEncoder(w).Encode(body)
+	appkit.WriteJSON(w, http.StatusOK, map[string]any{"svg": svg})
 }
